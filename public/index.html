@@ -5,17 +5,31 @@
     <title>Image Board</title>
 </head>
 <body>
+    
+    <div class="headings">
+        <h1>name of the page</h1>
+        <h2>latest images</h2>
+    </div>
 
     <main>
-        <div class="headings">
-            <h1>{{ heading }}</h1>
-            <h2>{{ subHeading }}</h2>
+        
+        <div class="input-fields">
+            <input v-model="title" type="text" name="title" placeholder="title">
+            <input v-model="description" type="text" name="description" placeholder="description">
+            <input v-model="username" type="text" name="username" placeholder="username">
+
+            <input @change="handleChange" type="file" name="file" accept="image/*">
+
+            <button @click="handleClick">submit</button>
         </div>
+            
+        
+
         <ul class="cards-container">
             <li v-for='image in images'>
                 <div class="img-container">
                     <img :src="image.url">
-                </div>
+                </div> 
                 <p>{{ image.title }}</p>
             </li>
         </ul>
