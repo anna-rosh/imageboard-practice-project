@@ -47,7 +47,7 @@ app.get('/images', (req, res) => {
 
 app.post('/upload', uploader.single("file"), s3.upload, (req, res) => {
 
-    console.log('REQ.BODY IN POST ON /upload: ', req.body);
+    // console.log('REQ.BODY IN POST ON /upload: ', req.body);
 
     if (req.file) {
 
