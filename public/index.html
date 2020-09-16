@@ -24,19 +24,24 @@
             </div>
         
             <ul class="cards-container">
-                <li v-for='image in images' class="card">
+                <li class="card" v-for='image in images' @click="handleClickOnImage(image.id)">
                     <div class="img-container">
                         <img :src="image.url">
                     </div>
                     <div class="title-container">
-                       <p>{{ image.title }}</p> 
+                       <p>{{ image.title }}, {{ image.id }}</p> 
                     </div>  
                 </li>
             </ul>
-        </div>
-        
-        
+            <image-information :image-id="imageId" v-if="showModal"></image-information>
+        </div> 
     </main>
+
+    <script id='image-information' type="text/x-template">
+        <div id="img-information-component">
+            <h1>{{ heading }}</h1>
+        </div>
+    </script>
 
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>

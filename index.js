@@ -71,4 +71,11 @@ app.post('/upload', uploader.single("file"), s3.upload, (req, res) => {
 
 });
 
+
+app.get('/information', (req, res) => {
+
+
+
+});
+
 app.listen(8080, () => console.log('imgboard server is listening! 🎧'));

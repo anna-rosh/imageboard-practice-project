@@ -1,6 +1,30 @@
 
 (function() {
 
+    Vue.component("image-information", {
+        template: "#image-information",
+        props: ["imageId"],
+        data: function () {
+            return {
+                heading: "here is a test heading",
+            };
+        },
+        mounted: function () {
+            console.log('component is mounted!!! 🦆');
+            console.log("this.imageId of component: ", this.imageId);
+
+            axios.get('/information')
+                .then(function(resp) {
+                    // i guess, the object i'll get from the server with the
+                    // information about the clicked image and should
+                    // store it in the data of the component
+                })
+                .catch(err => console.log('err in GET /information script.js: ', err));
+        },
+
+        // here i will probably need a function to hide the image component
+    });
+
     new Vue({
         el: 'main',
         data: {
@@ -8,7 +32,9 @@
             title: "",
             description: "",
             username: "",
-            file: null
+            file: null,
+            showModal: false,
+            imageId: null
         },
         mounted: function() {
             var vueObj = this;
@@ -51,7 +77,15 @@
             handleChange: function(e) {
                 // put the image into the data objeact 
                 this.file = e.target.files[0];
+            },
+
+            handleClickOnImage: function(id) {
+                console.log('IMAGE ID INSIDE OF handleClickOnImage: ', id);
+
+                this.showModal = true;
+                this.imageId = id;
             }
+
         }
 
     }); // closes Vue obj
