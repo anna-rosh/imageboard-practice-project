@@ -13,7 +13,7 @@
 
     <main>
         <div class="container">
-            <div class="input-fields">
+            <form class="input-fields">
                 <input v-model="title" type="text" name="title" placeholder="title">
                 <input v-model="description" type="text" name="description" placeholder="description">
                 <input v-model="username" type="text" name="username" placeholder="username">
@@ -21,7 +21,7 @@
                 <input @change="handleChange" type="file" name="file" accept="image/*">
 
                 <button @click="handleClick">submit</button>
-            </div>
+            </form>
         
             <ul class="cards-container">
                 <li class="card" v-for='image in images' @click="handleClickOnImage(image.id)">
@@ -39,7 +39,17 @@
 
     <script id='image-information' type="text/x-template">
         <div id="img-information-component">
+            <h1>X</h1>
             <h1>{{ heading }}</h1>
+            <img :src="currentImageInfo.url">
+            <h2>{{ currentImageInfo.title }}</h2>
+            <p>uploaded by {{ currentImageInfo.username }}</p>
+
+            <h2>comments:</h2>
+            <div class="comment" v-for="comment in comments">
+                <h3>{{ comment.comment }}</h3>
+                <p>{{ comment.username }}</p>
+            </div>
         </div>
     </script>
 

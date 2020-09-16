@@ -23,10 +23,20 @@ module.exports.addImage = (url, username, title, description) => {
     );
 };
 
+
+
 module.exports.getClickedImageInfo = (id) => {
     return db.query(
         `SELECT * FROM images
         WHERE id = $1`,
         [id]
+    );
+};
+
+module.exports.getComments = (imageId) => {
+    return db.query(
+        `SELECT * FROM comments
+        WHERE image_id = $1`,
+        [imageId]
     );
 };

@@ -87,6 +87,10 @@ body {
     text-transform: uppercase;
 }
 
+#img-information-component img {
+    width: 200px;
+}
+
 /* ________________________________________________________________________________________________ */
 
 

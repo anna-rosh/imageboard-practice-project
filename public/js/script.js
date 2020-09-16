@@ -7,23 +7,42 @@
         data: function () {
             return {
                 heading: "here is a test heading",
+                currentImageInfo: null,
+                comments: []
             };
         },
         mounted: function () {
             console.log('component is mounted!!! 🦆');
             console.log("this.imageId of component: ", this.imageId);
-
-            axios.get('/information')
+            const that = this;
+            // pass the imageId as a route parameter to GET
+            // index.js will have the access to this value in req.params
+            axios.get(`/information/${that.imageId}`)
                 .then(function(resp) {
-                    // i guess, the object i'll get from the server with the
-                    // information about the clicked image and should
-                    // store it in the data of the component
+                    // store the obj returned from the server request in the data
+                    // of the component to access it in index.html
+                    that.currentImageInfo = resp.data;
                 })
-                .catch(err => console.log('err in GET /information script.js: ', err));
+                .catch(function(err) {
+                    console.log('err in GET /information script.js: ', err); 
+                });
+
+            axios.get(`/comments/${that.imageId}`)
+                .then(function(resp) {
+
+                    console.log('RESP IN GET /COMMENTS: ', resp);
+                    that.comments = resp.data.comments;
+
+                })
+                .catch(function(err) {
+                    console.log('err in get /comments script.js: ', err);
+                });
+
         },
 
-        // here i will probably need a function to hide the image component
-    });
+
+    }); // closes component
+
 
     new Vue({
         el: 'main',
@@ -71,7 +90,9 @@
                         // console.log('images array', vueObj.images);
                         vueObj.images.unshift(resp.data);
                     })
-                    .catch(err => console.log('err from POST /upload: ', err));
+                    .catch(function(err) {
+                        console.log('err from POST /upload: ', err);
+                    });
             },
 
             handleChange: function(e) {
@@ -79,9 +100,8 @@
                 this.file = e.target.files[0];
             },
 
+            // called in index.html and gets it arg from main vue instance
             handleClickOnImage: function(id) {
-                console.log('IMAGE ID INSIDE OF handleClickOnImage: ', id);
-
                 this.showModal = true;
                 this.imageId = id;
             }

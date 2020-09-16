@@ -8,6 +8,8 @@ const path = require("path");
 const s3 = require('./s3');
 const { s3Url } = require('./config');
 
+app.use(express.json());
+
 app.use(express.static('public'));
 
 const diskStorage = multer.diskStorage({
@@ -71,11 +73,31 @@ app.post('/upload', uploader.single("file"), s3.upload, (req, res) => {
 
 });
 
+// GET will get the id of the clicked image in the dynamic path.
+app.get('/information/:imageId', (req, res) => {
+    // the id of the clicked image is accessible in req.params
 
-app.get('/information', (req, res) => {
+    db.getClickedImageInfo(req.params.imageId)
+        .then(({ rows }) => {
+            // console.log('ROWS IN getClickedImageInfo: ', rows);
+            res.json(rows[0]);            
+        })
+        .catch(err => console.log('err in getClickedImageInfo: ', err));
 
+});
 
+app.get('/comments/:imageId', (req, res) => {
 
+    db.getComments(req.params.imageId)
+        .then(({ rows:comments }) => {
+            
+            console.log('ROWS in getComments: ', comments);
+            res.json({
+                comments
+            });
+
+        })
+        .catch(err => console.log('err in getComments: ', err));
 });
 
 app.listen(8080, () => console.log('imgboard server is listening! 🎧'));
