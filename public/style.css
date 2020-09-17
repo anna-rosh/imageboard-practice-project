@@ -69,7 +69,6 @@ body {
 .card .title-container {
     position: absolute;
     bottom: 0;
-    z-index: 1;
     width: 100%;
     background-color: rgba(104, 97, 97, 0.6);
     color: white;
@@ -84,7 +83,6 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
     position: absolute;
     top: 200px;
-    text-transform: uppercase;
 }
 
 #img-information-component img {

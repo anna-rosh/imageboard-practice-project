@@ -37,6 +37,7 @@
         </div> 
     </main>
 
+<!-- ////////////////////////////////// COMPONENT //////////////////////////// -->
     <script id='image-information' type="text/x-template">
         <div id="img-information-component">
             <h1>X</h1>
@@ -45,7 +46,12 @@
             <h2>{{ currentImageInfo.title }}</h2>
             <p>uploaded by {{ currentImageInfo.username }}</p>
 
-            <h2>comments:</h2>
+            <h2>add a comment</h2>
+            <div id="comment-form">
+                <input v-model="comment" type="text" name="comment" placeholder="comment">
+                <input v-model="username" type="text" name="username" placeholder="username">
+                <button @click="handleClickOnAddComment">add comment</button>
+            </div>
             <div class="comment" v-for="comment in comments">
                 <h3>{{ comment.comment }}</h3>
                 <p>{{ comment.username }}</p>

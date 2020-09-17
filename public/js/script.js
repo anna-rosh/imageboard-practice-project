@@ -8,38 +8,58 @@
             return {
                 heading: "here is a test heading",
                 currentImageInfo: null,
-                comments: []
+                username: "",
+                comment: "",
+                comments: [],
             };
         },
         mounted: function () {
-            console.log('component is mounted!!! 🦆');
-            console.log("this.imageId of component: ", this.imageId);
+            // console.log("component is mounted!!! 🦆");
+            // console.log("this.imageId of component: ", this.imageId);
             const that = this;
             // pass the imageId as a route parameter to GET
             // index.js will have the access to this value in req.params
-            axios.get(`/information/${that.imageId}`)
-                .then(function(resp) {
+            axios
+                .get('/information/' + that.imageId)
+                .then(function (resp) {
                     // store the obj returned from the server request in the data
                     // of the component to access it in index.html
                     that.currentImageInfo = resp.data;
                 })
-                .catch(function(err) {
-                    console.log('err in GET /information script.js: ', err); 
+                .catch(function (err) {
+                    console.log("err in GET /information script.js: ", err);
                 });
 
-            axios.get(`/comments/${that.imageId}`)
-                .then(function(resp) {
-
-                    console.log('RESP IN GET /COMMENTS: ', resp);
+            axios
+                .get(`/comments/${that.imageId}`)
+                .then(function (resp) {
+                    console.log("RESP IN GET /COMMENTS: ", resp);
                     that.comments = resp.data.comments;
-
                 })
-                .catch(function(err) {
-                    console.log('err in get /comments script.js: ', err);
+                .catch(function (err) {
+                    console.log("err in get /comments script.js: ", err);
                 });
+        }, // closes mounted
+        methods: {
+            handleClickOnAddComment: function(e) {
+                e.preventDefault();
 
-        },
+                var commentData = {
+                    username: this.username,
+                    comment: this.comment
+                };
 
+                var that = this;
+
+                axios.post('/comment/' + that.imageId, commentData)
+                    .then((result) => {
+                        that.comments.unshift(result.data);
+                    })
+                    .catch(function(err) {
+                        console.log('err in POST /comment script.js: ', err);
+                    });
+            }
+        }, // closes methods
 
     }); // closes component
 

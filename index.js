@@ -48,13 +48,9 @@ app.get('/images', (req, res) => {
 
 
 app.post('/upload', uploader.single("file"), s3.upload, (req, res) => {
-
     // console.log('REQ.BODY IN POST ON /upload: ', req.body);
-
     if (req.file) {
-
         // console.log(req.file);
-
         const filename = req.file.filename;
         const url = `${s3Url}${filename}`;
 
@@ -76,7 +72,6 @@ app.post('/upload', uploader.single("file"), s3.upload, (req, res) => {
 // GET will get the id of the clicked image in the dynamic path.
 app.get('/information/:imageId', (req, res) => {
     // the id of the clicked image is accessible in req.params
-
     db.getClickedImageInfo(req.params.imageId)
         .then(({ rows }) => {
             // console.log('ROWS IN getClickedImageInfo: ', rows);
@@ -98,6 +93,20 @@ app.get('/comments/:imageId', (req, res) => {
 
         })
         .catch(err => console.log('err in getComments: ', err));
+});
+
+
+app.post('/comment/:imageId', (req, res) => {
+    // console.log('imageId in params: ', req.params);
+    // console.log('req.body in POST comment: ', req.body);
+    const { username, comment } = req.body;
+
+    db.addComment(username, comment, req.params.imageId)
+        .then(({ rows:addedComment }) => {
+
+            res.json(addedComment[0]);
+        })
+        .catch(err => console.log('err in addComment: ', err));
 });
 
 app.listen(8080, () => console.log('imgboard server is listening! 🎧'));

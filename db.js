@@ -13,17 +13,14 @@ module.exports.getImages = () => {
     );
 };
 
-
 module.exports.addImage = (url, username, title, description) => {
     return db.query(
         `INSERT INTO images (url, username, title, description)
         VALUES ($1, $2, $3, $4)
-        RETURNING url, username, title, description`,
+        RETURNING id, url, username, title, description, created_at`,
         [url, username, title, description]
     );
 };
-
-
 
 module.exports.getClickedImageInfo = (id) => {
     return db.query(
@@ -36,7 +33,17 @@ module.exports.getClickedImageInfo = (id) => {
 module.exports.getComments = (imageId) => {
     return db.query(
         `SELECT * FROM comments
-        WHERE image_id = $1`,
+        WHERE image_id = $1
+        ORDER BY id DESC`,
         [imageId]
+    );
+};
+
+module.exports.addComment = (username, comment, imageId) => {
+    return db.query(
+        `INSERT INTO comments (username, comment, image_id)
+        VALUES ($1, $2, $3)
+        RETURNING username, comment, image_id, created_at`,
+        [username, comment, imageId]
     );
 };
