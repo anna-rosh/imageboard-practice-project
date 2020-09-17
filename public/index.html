@@ -29,22 +29,25 @@
                         <img :src="image.url">
                     </div>
                     <div class="title-container">
-                       <p>{{ image.title }}, {{ image.id }}</p> 
+                       <p>{{ image.title }}</p> 
                     </div>  
                 </li>
             </ul>
-            <image-information :image-id="imageId" v-if="showModal"></image-information>
+
+            <div @click="showMoreImages" id="show-more">show more</div>
+
+            <image-information :image-id="imageId" v-if="showModal" v-on:clicked="closeModal"></image-information>
         </div> 
     </main>
 
 <!-- ////////////////////////////////// COMPONENT //////////////////////////// -->
     <script id='image-information' type="text/x-template">
         <div id="img-information-component">
-            <h1>X</h1>
+            <h1 v-on:click="clicked">X</h1>
             <h1>{{ heading }}</h1>
             <img :src="currentImageInfo.url">
             <h2>{{ currentImageInfo.title }}</h2>
-            <p>uploaded by {{ currentImageInfo.username }}</p>
+            <p>uploaded by {{ currentImageInfo.username }} on {{ currentImageInfo.created_at }}</p>
 
             <h2>add a comment</h2>
             <div id="comment-form">
@@ -54,7 +57,7 @@
             </div>
             <div class="comment" v-for="comment in comments">
                 <h3>{{ comment.comment }}</h3>
-                <p>{{ comment.username }}</p>
+                <p>{{ comment.username }} on {{ comment.created_at }}</p>
             </div>
         </div>
     </script>

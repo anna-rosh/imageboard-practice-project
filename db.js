@@ -9,7 +9,8 @@ const db = spicedPg(
 module.exports.getImages = () => {
     return db.query(
         `SELECT * FROM images
-        ORDER BY id DESC`
+        ORDER BY id DESC
+        LIMIT 3`
     );
 };
 
@@ -45,5 +46,15 @@ module.exports.addComment = (username, comment, imageId) => {
         VALUES ($1, $2, $3)
         RETURNING username, comment, image_id, created_at`,
         [username, comment, imageId]
+    );
+};
+
+module.exports.getMoreImages = lowestId => {
+    return db.query(
+        `SELECT * FROM images
+        WHERE id < $1
+        ORDER BY id DESC
+        LIMIT 3`,
+        [lowestId]
     );
 };

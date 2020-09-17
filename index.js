@@ -85,12 +85,10 @@ app.get('/comments/:imageId', (req, res) => {
 
     db.getComments(req.params.imageId)
         .then(({ rows:comments }) => {
-            
-            console.log('ROWS in getComments: ', comments);
+
             res.json({
                 comments
             });
-
         })
         .catch(err => console.log('err in getComments: ', err));
 });
@@ -107,6 +105,18 @@ app.post('/comment/:imageId', (req, res) => {
             res.json(addedComment[0]);
         })
         .catch(err => console.log('err in addComment: ', err));
+});
+
+// i am getting the information about the lowest id from script.js
+app.get('/more-images/:lowestId', (req, res) => {
+
+    db.getMoreImages(req.params.lowestId)
+        .then(({ rows }) => {
+            // console.log(rows);
+            res.json(rows);
+        })
+        .catch(err => console.log('err in getMoreImages: ', err));
+
 });
 
 app.listen(8080, () => console.log('imgboard server is listening! 🎧'));
