@@ -67,13 +67,14 @@
             clicked: function() {
                 this.$emit('clicked');
             }
+
         }, // closes methods
 
     }); // closes component
 
 
     new Vue({
-        el: 'main',
+        el: "main",
         data: {
             images: [],
             title: "",
@@ -81,26 +82,31 @@
             username: "",
             file: null,
             showModal: false,
-            imageId: null
+            imageId: location.hash.slice(1)
         },
-        mounted: function() {
+        mounted: function () {
             var that = this;
             axios
-                .get('/images')
-                .then(function(resp) {
+                .get("/images")
+                .then(function (resp) {
                     // console.log('response from GET /images: ', resp);
                     that.images = resp.data.images;
+
+                    window.addEventListener('hashchange', function() {
+                        that.imageId = location.hash.slice(1);
+                    });
+
                 })
-                .then(function() {
+                .then(function () {
                     that.checkScrollPosition();
                 })
-                .catch(function(err) {
-                    console.log('err in get /images: ', err);
+                .catch(function (err) {
+                    console.log("err in get /images: ", err);
                 });
         },
 
         methods: {
-            handleClick: function(e) {
+            handleClick: function (e) {
                 e.preventDefault();
 
                 var formData = new FormData();
@@ -112,8 +118,8 @@
                 var vueObj = this;
 
                 axios
-                    .post('/upload', formData)
-                    .then(function(resp) {
+                    .post("/upload", formData)
+                    .then(function (resp) {
                         // here I am getting response from the server (POST /upload)
                         // => that is an obj with the inserted row from the database
                         // console.log('RESPONSE IN AXIOS: ', resp);
@@ -121,45 +127,39 @@
                         // console.log('images array', vueObj.images);
                         vueObj.images.unshift(resp.data);
                     })
-                    .catch(function(err) {
-                        console.log('err from POST /upload: ', err);
+                    .catch(function (err) {
+                        console.log("err from POST /upload: ", err);
                     });
             },
 
-            handleChange: function(e) {
-                // put the image into the data objeact 
+            handleChange: function (e) {
+                // put the image into the data objeact
                 this.file = e.target.files[0];
             },
 
-            // called in index.html and gets it arg from main vue instance
-            handleClickOnImage: function(id) {
-                this.showModal = true;
-                this.imageId = id;
-            },
-            
-            closeModal: function() {
-                this.showModal = false;
+            closeModal: function () {
+                this.imageId = '';
             },
 
-            showMoreImages: function() {
+            showMoreImages: function () {
                 // get the lowest id among the current images on the page
                 var lowestId = this.images[this.images.length - 1].id;
                 var that = this;
 
-                axios.get('/more-images/' + lowestId)
-                    .then(function(result) {
+                axios
+                    .get("/more-images/" + lowestId)
+                    .then(function (result) {
                         for (var i = 0; i < result.data.length; i++) {
                             that.images.push(result.data[i]);
                         }
                         that.checkScrollPosition();
                     })
-                    .catch(function(err) {
-                        console.log('err in get /more-images: ', err);
+                    .catch(function (err) {
+                        console.log("err in get /more-images: ", err);
                     });
-
             },
 
-            checkScrollPosition: function() {
+            checkScrollPosition: function () {
                 var that = this;
                 setTimeout(function () {
                     if (
@@ -170,12 +170,9 @@
                     } else {
                         that.checkScrollPosition();
                     }
-
                 }, 500);
-            }
-
-        }
-
+            },
+        },
     }); // closes Vue obj
 
 
