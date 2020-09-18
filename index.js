@@ -41,7 +41,10 @@ app.get('/images', (req, res) => {
                 images
             });
         })
-        .catch(err => console.log('err in getImages: ', err));
+        .catch(err => {
+            console.log("err in getImages: ", err);
+            res.status(400);
+        });
 
 });
 
@@ -62,7 +65,10 @@ app.post('/upload', uploader.single("file"), s3.upload, (req, res) => {
                 res.json(rows[0]);
 
             })
-            .catch(err => console.log('err in addImage: ', err));
+            .catch(err => {
+                console.log('err in addImage: ', err);
+                res.status(400);
+            });
     }
 
 
@@ -77,7 +83,10 @@ app.get('/information/:imageId', (req, res) => {
             // console.log('ROWS IN getClickedImageInfo: ', rows);
             res.json(rows[0]);            
         })
-        .catch(err => console.log('err in getClickedImageInfo: ', err));
+        .catch(err => {
+            console.log('err in getClickedImageInfo: ', err);
+            res.json(false);
+        });
 
 });
 
@@ -90,7 +99,11 @@ app.get('/comments/:imageId', (req, res) => {
                 comments
             });
         })
-        .catch(err => console.log('err in getComments: ', err));
+        .catch(err => {
+            console.log('err in getComments: ', err);
+            res.json([]);
+        });
+            
 });
 
 
@@ -104,7 +117,10 @@ app.post('/comment/:imageId', (req, res) => {
 
             res.json(addedComment[0]);
         })
-        .catch(err => console.log('err in addComment: ', err));
+        .catch(err => {
+            console.log('err in addComment: ', err);
+            res.status(400);
+        });
 });
 
 // i am getting the information about the lowest id from script.js
@@ -115,7 +131,10 @@ app.get('/more-images/:lowestId', (req, res) => {
             // console.log(rows);
             res.json(rows);
         })
-        .catch(err => console.log('err in getMoreImages: ', err));
+        .catch(err => {
+            console.log('err in getMoreImages: ', err);
+            res.status(400);  
+        });
 
 });
 

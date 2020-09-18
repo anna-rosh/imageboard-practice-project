@@ -23,6 +23,12 @@
             axios
                 .get('/information/' + that.imageId)
                 .then(function (resp) {
+                    console.log('response in mounted: ', resp.data);
+
+                    if (!resp.data) {
+                        location.hash = "";
+                        that.imageId = null;
+                    }
                     // store the obj returned from the server request in the data
                     // of the component to access it in index.html
                     that.currentImageInfo = resp.data;
@@ -44,7 +50,6 @@
 
         watch: {
             imageId: function() {
-                console.log('imageId: ', this.imageId);
 
                 const that = this;
                 // pass the imageId as a route parameter to GET
@@ -52,6 +57,12 @@
                 axios
                     .get("/information/" + that.imageId)
                     .then(function (resp) {
+                        console.log('response in watcher: ', resp.data);
+
+                        if (!resp.data) {
+                            location.hash = '';
+                            that.imageId = null;
+                        }
                         // store the obj returned from the server request in the data
                         // of the component to access it in index.html
                         that.currentImageInfo = resp.data;
