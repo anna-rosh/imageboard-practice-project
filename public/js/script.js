@@ -14,75 +14,15 @@
             };
         },
 
-        mounted: function () {
-            // console.log("component is mounted!!! 🦆");
-            // console.log("this.imageId of component: ", this.imageId);
-            const that = this;
-            // pass the imageId as a route parameter to GET
-            // index.js will have the access to this value in req.params
-            axios
-                .get('/information/' + that.imageId)
-                .then(function (resp) {
-                    console.log('response in mounted: ', resp.data);
-
-                    if (!resp.data) {
-                        location.hash = "";
-                        that.imageId = null;
-                    }
-                    // store the obj returned from the server request in the data
-                    // of the component to access it in index.html
-                    that.currentImageInfo = resp.data;
-                })
-                .catch(function (err) {
-                    console.log("err in GET /information script.js: ", err);
-                });
-
-            axios
-                .get('/comments/' + that.imageId)
-                .then(function (resp) {
-                    // console.log("RESP IN GET /COMMENTS: ", resp);
-                    that.comments = resp.data.comments;
-                })
-                .catch(function (err) {
-                    console.log("err in get /comments script.js: ", err);
-                });
-        }, // closes mounted
+        mounted: function() {
+            this.showModal();
+        },
 
         watch: {
             imageId: function() {
-
-                const that = this;
-                // pass the imageId as a route parameter to GET
-                // index.js will have the access to this value in req.params
-                axios
-                    .get("/information/" + that.imageId)
-                    .then(function (resp) {
-                        console.log('response in watcher: ', resp.data);
-
-                        if (!resp.data) {
-                            location.hash = '';
-                            that.imageId = null;
-                        }
-                        // store the obj returned from the server request in the data
-                        // of the component to access it in index.html
-                        that.currentImageInfo = resp.data;
-                    })
-                    .catch(function (err) {
-                        console.log("err in GET /information script.js: ", err);
-                    });
-
-                axios
-                    .get("/comments/" + that.imageId)
-                    .then(function (resp) {
-                        // console.log("RESP IN GET /COMMENTS: ", resp);
-                        that.comments = resp.data.comments;
-                    })
-                    .catch(function (err) {
-                        console.log("err in get /comments script.js: ", err);
-                    });
+                this.showModal();   
             }
-
-        }, // closes watchers
+        },
 
         methods: {
             handleClickOnAddComment: function(e) {
@@ -108,6 +48,42 @@
 
             clicked: function() {
                 this.$emit('clicked');
+            },
+
+            showModal: function() {
+                const that = this;
+                // pass the imageId as a route parameter to GET
+                // index.js will have the access to this value in req.params
+                axios
+                    .get("/information/" + that.imageId)
+                    .then(function (resp) {
+                        if (!resp.data) {
+                            location.hash = "";
+                            that.imageId = null;
+                        }
+                        // store the obj returned from the server request in the data
+                        // of the component to access it in index.html
+                        that.currentImageInfo = resp.data;
+                    })
+                    .catch(function (err) {
+                        console.log(
+                            "err in GET /information script.js: ",
+                            err
+                        );
+                    });
+
+                axios
+                    .get("/comments/" + that.imageId)
+                    .then(function (resp) {
+                        // console.log("RESP IN GET /COMMENTS: ", resp);
+                        that.comments = resp.data.comments;
+                    })
+                    .catch(function (err) {
+                        console.log(
+                            "err in get /comments script.js: ",
+                            err
+                        );
+                    });
             }
 
         }, // closes methods
@@ -123,7 +99,6 @@
             description: "",
             username: "",
             file: null,
-            showModal: false,
             imageId: location.hash.slice(1)
         },
         mounted: function () {
