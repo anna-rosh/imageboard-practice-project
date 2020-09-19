@@ -41,6 +41,9 @@
                     .then((result) => {
                         that.comments.unshift(result.data);
                     })
+                    .then(function() {
+                        that.clearInputFields();
+                    })
                     .catch(function(err) {
                         console.log('err in POST /comment script.js: ', err);
                     });
@@ -54,6 +57,7 @@
                 const that = this;
                 // pass the imageId as a route parameter to GET
                 // index.js will have the access to this value in req.params
+
                 axios
                     .get("/information/" + that.imageId)
                     .then(function (resp) {
@@ -84,6 +88,11 @@
                             err
                         );
                     });
+            },
+
+            clearInputFields: function() {
+                this.username = '';
+                this.comment = '';
             }
 
         }, // closes methods
@@ -132,17 +141,17 @@
                 formData.append("username", this.username);
                 formData.append("file", this.file);
 
-                var vueObj = this;
+                var that = this;
 
                 axios
                     .post("/upload", formData)
                     .then(function (resp) {
                         // here I am getting response from the server (POST /upload)
                         // => that is an obj with the inserted row from the database
-                        // console.log('RESPONSE IN AXIOS: ', resp);
-
-                        // console.log('images array', vueObj.images);
-                        vueObj.images.unshift(resp.data);
+                        that.images.unshift(resp.data);
+                    })
+                    .then(function() {
+                        that.clearInputFields();
                     })
                     .catch(function (err) {
                         console.log("err from POST /upload: ", err);
@@ -190,10 +199,23 @@
                     }
                 }, 500);
             },
-        },
+
+            clearInputFields: function() {
+                this.title = '';
+                this.username = '';
+                this.description = '';
+                this.file = null;
+                document.getElementById("file-upload-btn").innerHTML =
+                    "⬆ choose an image";
+            }
+
+        }, // closes methods
     }); // closes Vue obj
 
 
+    document.getElementById('file-upload').addEventListener('change', function() {
+        document.getElementById('file-upload-btn').innerHTML = '⬆ an image chosen';
+    });
 
 
 

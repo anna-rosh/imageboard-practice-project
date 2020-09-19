@@ -81,6 +81,8 @@ app.get('/information/:imageId', (req, res) => {
     db.getClickedImageInfo(req.params.imageId)
         .then(({ rows }) => {
             // console.log('ROWS IN getClickedImageInfo: ', rows);
+            console.log('infos from db in getClickedImageInfo: ', rows);
+
             res.json(rows[0]);            
         })
         .catch(err => {

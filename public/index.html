@@ -7,20 +7,24 @@
 <body>
     
     <div class="headings">
-        <h1>name of the page</h1>
-        <h2>latest images</h2>
+        <h1 class="first">any</h1>
+        <h1 class="second">pictures</h1>
     </div>
 
     <main>
         <div class="container">
             <form class="input-fields">
-                <input v-model="title" type="text" name="title" placeholder="title">
-                <input v-model="description" type="text" name="description" placeholder="description">
-                <input v-model="username" type="text" name="username" placeholder="username">
+                <div class="text-input">
+                    <input v-model="title" type="text" name="title" placeholder="title">
+                    <input v-model="description" type="text" name="description" placeholder="description">
+                    <input v-model="username" type="text" name="username" placeholder="username">
+                </div>
 
-                <input @change="handleChange" type="file" name="file" accept="image/*">
-
-                <button @click="handleClick">submit</button>
+                <div class="file-input">
+                    <input  @change="handleChange" id="file-upload" type="file" name="file" accept="image/*">
+                    <label for="file-upload" id="file-upload-btn">⬆ choose an image</label>
+                    <button @click="handleClick">submit</button>
+                </div>
             </form>
         
             <ul class="cards-container">
@@ -30,7 +34,7 @@
                                 <img :src="image.url">
                             </div>
                             <div class="title-container">
-                            <p>{{ image.title }}</p> 
+                            <p>{{ image.title }} {{ image.id }}</p> 
                             </div>   
                         </a>
                         
@@ -46,7 +50,9 @@
 <!-- ////////////////////////////////// COMPONENT //////////////////////////// -->
     <script id='image-information' type="text/x-template">
         <div id="img-information-component">
-            <h1 v-on:click="clicked">X</h1>
+            <a :href="'#' + currentImageInfo.next" v-if="currentImageInfo.next"><div class="nav next"><</div></a>
+            <a :href="'#' + currentImageInfo.prev" v-if="currentImageInfo.prev"><div class="nav prev">></div></a>
+            <h1 v-on:click="clicked" id="close">X</h1>
             <h1>{{ heading }}</h1>
             <img :src="currentImageInfo.url">
             <h2>{{ currentImageInfo.title }}</h2>
