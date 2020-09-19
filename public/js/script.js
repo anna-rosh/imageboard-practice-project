@@ -6,7 +6,6 @@
         props: ["imageId"],
         data: function () {
             return {
-                heading: "here is a test heading",
                 currentImageInfo: null,
                 username: "",
                 comment: "",

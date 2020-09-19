@@ -16,7 +16,7 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin-top: 70px;
+    padding-top: 70px;
     margin-bottom: 50px;
 }
 
@@ -35,7 +35,8 @@ body {
 .headings img {
     width: 55px;
     position: absolute;
-    top: -14px;
+    top: 56px;
+    opacity: 0.9;
 }
 
 .container {
@@ -195,9 +196,24 @@ body {
 /* ////////////////////////// IMAGE INFORMATION COMPONENT ///////////////////////// */
 
 #img-information-component {
-    color: magenta;
+    width: 100%;
+    height: 100%;
+    color: rgb(88, 85, 85);
     background-color: rgba(0, 0, 0, 0.5);
     position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.information-container {
+    background-color: #fff;
+    width: 700px;
+    height: 500px;
+    position: -webkit-sticky;
+    position: sticky;
+    display: flex;
     top: 200px;
 }
 
