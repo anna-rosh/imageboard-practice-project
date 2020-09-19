@@ -207,16 +207,26 @@
                 this.file = null;
                 document.getElementById("file-upload-btn").innerHTML =
                     "⬆ choose an image";
+            },
+
+            showTitle: function(e) {
+                var currIndex = this.$refs.cards.indexOf(e.currentTarget);
+                this.$refs.titles[currIndex].style.opacity = '1';
+            },
+
+            hideTitle: function(e) {
+                var currIndex = this.$refs.cards.indexOf(e.currentTarget);
+                this.$refs.titles[currIndex].style.opacity = "0";
             }
 
         }, // closes methods
     }); // closes Vue obj
 
 
+    // change the text of the choose image button after the image was selected
     document.getElementById('file-upload').addEventListener('change', function() {
-        document.getElementById('file-upload-btn').innerHTML = '⬆ an image chosen';
+        document.getElementById('file-upload-btn').innerHTML = '⬆ an image selected';
     });
-
 
 
 })();

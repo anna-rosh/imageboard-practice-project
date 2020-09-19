@@ -7,8 +7,8 @@
 <body>
     
     <div class="headings">
-        <h1 class="first">any</h1>
-        <h1 class="second">pictures</h1>
+        <img src="/images/hanging-cat-4794472_1280.png" alt="cat">
+        <h1>petstagram</h1>
     </div>
 
     <main>
@@ -28,13 +28,14 @@
             </form>
         
             <ul class="cards-container">
-                    <li class="card" v-for='image in images'>
+                    <li class="card" v-for='image in images' @mouseenter="showTitle" @mouseleave="hideTitle" ref="cards">
                         <a :href="'#' + image.id">
                             <div class="img-container">
                                 <img :src="image.url">
                             </div>
-                            <div class="title-container">
-                            <p>{{ image.title }} {{ image.id }}</p> 
+                            <div id="title-container" ref="titles">
+                                <img id="paw" src="/images/paw-155322_640.png" alt="paw">
+                                <p>{{ image.title }}</p> 
                             </div>   
                         </a>
                         
