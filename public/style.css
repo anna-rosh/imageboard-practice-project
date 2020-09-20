@@ -8,6 +8,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     color: rgb(88, 85, 85);
     position: relative;
+    height: 100vh;
 }
 
 .headings {
@@ -205,6 +206,7 @@ body {
     left: 0;
     display: flex;
     justify-content: center;
+    z-index: 1;
 }
 
 #img-information-component .image-modal {
@@ -216,6 +218,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    z-index: 2;
 }
 
 .information-container {
@@ -295,18 +298,25 @@ body {
     line-height: 21px;
 }
 
+.information-container .right-container .uploaded-by {
+    font-size: 12px;
+    opacity: 0.6;
+}
+
 #comment-form {
     display: flex;
     flex-direction: column;
 }
 
 #comment-form input {
-    padding: 3px 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-right: 10px;
     letter-spacing: 0.5px;
     border: none;
     border-bottom: 1px solid rgb(88, 85, 85);
     transition: border 0.3s;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 #comment-form input:hover,
@@ -319,11 +329,10 @@ body {
     margin-top: 10px;
     background-color: white;
     border: none;
-    font-size: 16px;
+    font-size: 15px;
     letter-spacing: 1px;
     color: rgb(88, 85, 85);
     text-align: left;
-    padding-left: 10px;
     transition: color 0.3s;
 }
 
@@ -335,17 +344,22 @@ body {
 }
 
 .information-container .comments-container {
-    height: 250px;
+    height: 200px;
     overflow: scroll;
+    margin-top: 15px;
 }
 
 .information-container .comment {
-    margin-bottom: 13px;
+    margin-bottom: 12px;
+}
+
+.information-container .comment-text {
+    font-size: 14px;
 }
 
 .information-container .commenter {
-    font-size: 14px;
-    opacity: 0.8;
+    font-size: 12px;
+    opacity: 0.6;
 }
 
 

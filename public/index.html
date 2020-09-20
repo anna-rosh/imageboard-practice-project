@@ -35,7 +35,8 @@
                             </div>
                             <div id="title-container" ref="titles">
                                 <img id="paw" src="/images/paw-155322_640.png" alt="paw">
-                                <p>{{ image.title }}</p> 
+                                <p v-if="image.title">{{ image.title }}</p>
+                                <p v-else>untitled</p> 
                             </div>   
                         </a>
                         
@@ -66,8 +67,13 @@
 
                     <div class="right-container">
                         <h1 v-on:click="clicked" id="close">X</h1>
-                        <h2>{{ currentImageInfo.title }}</h2>
-                        <p>uploaded by {{ currentImageInfo.username }}<br>on {{ currentImageInfo.created_at }}</p>
+                        <h2 v-if="currentImageInfo.title">{{ currentImageInfo.title }}</h2>
+                        <h2 v-else>untitled</h2>
+
+                        <p v-if="currentImageInfo.description">{{ currentImageInfo.description }}</p>
+
+                        <p class="uploaded-by" v-if="currentImageInfo.username">uploaded by {{ currentImageInfo.username }} on {{ currentImageInfo.created_at }}</p>
+                        <p class="uploaded-by" v-else>uploaded by unknown user<br>on {{ currentImageInfo.created_at }}</p>
                         
                         <div id="comment-form">
                             <input v-model="comment" type="text" name="comment" placeholder="write a comment...">
@@ -76,9 +82,10 @@
                         </div>
 
                         <div class="comments-container">
-                            <div class="comment" v-for="comment in comments">
+                            <div class="comment" v-for="comment in comments" v-if="comment.comment">
                                 <p class="comment-text">{{ comment.comment }}</p>
-                                <p class="commenter">{{ comment.username }} on {{ comment.created_at }}</p>
+                                <p class="commenter" v-if="comment.username">{{ comment.username }} on {{ comment.created_at }}</p>
+                                <p class="commenter" v-else> unkown user on {{ comment.created_at }}</p>
                             </div> 
                         </div>
                         <div id="delete-btn">

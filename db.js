@@ -69,3 +69,11 @@ module.exports.getMoreImages = lowestId => {
         [lowestId]
     );
 };
+
+module.exports.deleteImage = (imageId) => {
+    return db.query(
+        `DELETE FROM images
+        WHERE id = $1`,
+        [imageId]
+    );
+};

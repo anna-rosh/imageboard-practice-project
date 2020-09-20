@@ -80,6 +80,7 @@ app.get('/information/:imageId', (req, res) => {
     // the id of the clicked image is accessible in req.params
     db.getClickedImageInfo(req.params.imageId)
         .then(({ rows }) => {
+            console.log('this image was clicked: ', rows[0]);
             res.json(rows[0]);            
         })
         .catch(err => {
@@ -136,5 +137,10 @@ app.get('/more-images/:lowestId', (req, res) => {
         });
 
 });
+
+
+// app.post('/delete', s3.delete, (req, res) => {
+
+// })
 
 app.listen(8080, () => console.log('imgboard server is listening! 🎧'));
