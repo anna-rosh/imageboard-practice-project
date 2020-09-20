@@ -43,9 +43,3 @@ exports.upload = (req, res, next) => {
         });
 
 };
-
-// exports.delete = (req, res, next) => {
-
-//     console.log(req);
-
-// }

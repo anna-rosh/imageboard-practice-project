@@ -1,4 +1,3 @@
-
 (function() {
 
     Vue.component("image-information", {
@@ -13,46 +12,47 @@
             };
         },
 
-        mounted: function() {
+        mounted: function () {
             this.showModal();
         },
 
         watch: {
-            imageId: function() {
-                this.showModal();   
-            }
+            imageId: function () {
+                this.showModal();
+            },
         },
 
         methods: {
-            handleClickOnAddComment: function(e) {
+            handleClickOnAddComment: function (e) {
                 e.preventDefault();
 
                 var commentData = {
                     username: this.username,
-                    comment: this.comment
+                    comment: this.comment,
                 };
 
                 var that = this;
                 // while i am doing this post request i am sending along
                 // the data from input fields. I have access to them
                 // because of v-model in html => it transefers them automatically to data of this component
-                axios.post('/comment/' + that.imageId, commentData)
+                axios
+                    .post("/comment/" + that.imageId, commentData)
                     .then((result) => {
                         that.comments.unshift(result.data);
                     })
-                    .then(function() {
+                    .then(function () {
                         that.clearInputFields();
                     })
-                    .catch(function(err) {
-                        console.log('err in POST /comment script.js: ', err);
+                    .catch(function (err) {
+                        console.log("err in POST /comment script.js: ", err);
                     });
             },
 
-            clicked: function() {
-                this.$emit('clicked');
+            clicked: function () {
+                this.$emit("clicked");
             },
 
-            showModal: function() {
+            showModal: function () {
                 const that = this;
                 // pass the imageId as a route parameter to GET
                 // index.js will have the access to this value in req.params
@@ -69,10 +69,7 @@
                         that.currentImageInfo = resp.data;
                     })
                     .catch(function (err) {
-                        console.log(
-                            "err in GET /information script.js: ",
-                            err
-                        );
+                        console.log("err in GET /information script.js: ", err);
                     });
 
                 axios
@@ -82,20 +79,20 @@
                         that.comments = resp.data.comments;
                     })
                     .catch(function (err) {
-                        console.log(
-                            "err in get /comments script.js: ",
-                            err
-                        );
+                        console.log("err in get /comments script.js: ", err);
                     });
             },
 
-            clearInputFields: function() {
-                this.username = '';
-                this.comment = '';
+            clearInputFields: function () {
+                this.username = "";
+                this.comment = "";
+            },
+
+            deleteclick: function() {
+                this.$emit("deleteclick");
             }
 
         }, // closes methods
-
     }); // closes component
 
 
@@ -107,7 +104,7 @@
             description: "",
             username: "",
             file: null,
-            imageId: location.hash.slice(1)
+            imageId: location.hash.slice(1),
         },
         mounted: function () {
             var that = this;
@@ -117,10 +114,9 @@
                     // console.log('response from GET /images: ', resp);
                     that.images = resp.data.images;
 
-                    window.addEventListener('hashchange', function() {
+                    window.addEventListener("hashchange", function () {
                         that.imageId = location.hash.slice(1);
                     });
-
                 })
                 .then(function () {
                     that.checkScrollPosition();
@@ -149,7 +145,7 @@
                         // => that is an obj with the inserted row from the database
                         that.images.unshift(resp.data);
                     })
-                    .then(function() {
+                    .then(function () {
                         that.clearInputFields();
                     })
                     .catch(function (err) {
@@ -163,8 +159,8 @@
             },
 
             closeModal: function () {
-                this.imageId = '';
-                location.hash = '';
+                this.imageId = "";
+                location.hash = "";
             },
 
             showMoreImages: function () {
@@ -199,23 +195,38 @@
                 }, 500);
             },
 
-            clearInputFields: function() {
-                this.title = '';
-                this.username = '';
-                this.description = '';
+            clearInputFields: function () {
+                this.title = "";
+                this.username = "";
+                this.description = "";
                 this.file = null;
                 document.getElementById("file-upload-btn").innerHTML =
                     "⬆ choose an image";
             },
 
-            showTitle: function(e) {
+            showTitle: function (e) {
                 var currIndex = this.$refs.cards.indexOf(e.currentTarget);
-                this.$refs.titles[currIndex].style.opacity = '1';
+                this.$refs.titles[currIndex].style.opacity = "1";
             },
 
-            hideTitle: function(e) {
+            hideTitle: function (e) {
                 var currIndex = this.$refs.cards.indexOf(e.currentTarget);
                 this.$refs.titles[currIndex].style.opacity = "0";
+            },
+
+            handleDeleteClick: function() {
+                var that = this;
+
+                axios.post('/delete/' + that.imageId)
+                    .then((resp) => {
+                        that.closeModal();
+                        that.images = that.images.filter(function(image) {
+                            return image.id != resp.data.id;
+                        });
+                    })
+                    .catch(function(err) {
+                        console.log('err delete post requiest: ', err);
+                    });
             }
 
         }, // closes methods

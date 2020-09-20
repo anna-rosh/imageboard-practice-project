@@ -51,7 +51,7 @@ app.get('/images', (req, res) => {
 
 
 app.post('/upload', uploader.single("file"), s3.upload, (req, res) => {
-    // console.log('REQ.BODY IN POST ON /upload: ', req.body);
+
     if (req.file) {
         // console.log(req.file);
         const filename = req.file.filename;
@@ -139,8 +139,19 @@ app.get('/more-images/:lowestId', (req, res) => {
 });
 
 
-// app.post('/delete', s3.delete, (req, res) => {
+app.post('/delete/:imageId', (req, res) => {
 
-// })
+    console.log('req.body in post /delete from server: ', req.body);
+
+    db.deleteImage(req.params.imageId)
+        .then(({ rows }) => {
+            res.json(rows[0]);
+        })
+        .catch(err => {
+            console.log('err deleteImage: ', err);
+            res.status(500);
+        });
+
+});
 
 app.listen(8080, () => console.log('imgboard server is listening! 🎧'));

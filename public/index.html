@@ -45,7 +45,7 @@
                 
             </ul>
 
-            <image-information :image-id="imageId" v-if="imageId" v-on:clicked="closeModal"></image-information>
+            <image-information :image-id="imageId" v-if="imageId" v-on:clicked="closeModal" v-on:deleteclick="handleDeleteClick"></image-information>
         </div> 
     </main>
 
@@ -88,7 +88,7 @@
                                 <p class="commenter" v-else> unkown user on {{ comment.created_at }}</p>
                             </div> 
                         </div>
-                        <div id="delete-btn">
+                        <div @click="deleteclick" id="delete-btn">
                             <p>delete this image</p>
                         </div>
                     </div>
