@@ -207,30 +207,172 @@ body {
     justify-content: center;
 }
 
+#img-information-component .image-modal {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 200px;
+    width: 800px;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .information-container {
     background-color: #fff;
     width: 700px;
     height: 500px;
-    position: -webkit-sticky;
-    position: sticky;
     display: flex;
-    top: 200px;
+    justify-content: center;
+    position: relative;
 }
 
 #close {
     cursor: pointer;
     position: absolute;
+    padding: 5px;
+    font-size: 20px;
+    font-weight: normal;
     top: 0;
     right: 0;
+    transition: color 0.3s;
 }
 
-#img-information-component img {
-    width: 200px;
+#close:hover {
+    color: magenta;
 }
 
-#img-information-component .nav {
-    font-size: 50px;
+#close:active {
+    color: rgba(88, 85, 85, 0.7);
+}
+
+.information-container .left-container {
+    width: 60%;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.information-container .left-container img {
+    width: 100%;
+    object-fit: contain;
+}
+
+
+#delete-btn {
     cursor: pointer;
+    letter-spacing: 1px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 10px;
+    transition: color 0.3s;
+}
+
+#delete-btn:hover {
+    color: magenta;
+}
+
+#delete-btn:active {
+    color: rgba(88, 85, 85, 0.7);
+}
+
+/* ///////// modal - the right part with the comments //////////// */
+
+.information-container .right-container {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 10px;
+    padding-right: 15px;
+    padding-bottom: 10px;
+}
+
+.information-container .right-container p {
+    line-height: 21px;
+}
+
+#comment-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#comment-form input {
+    padding: 3px 10px;
+    letter-spacing: 0.5px;
+    border: none;
+    border-bottom: 1px solid rgb(88, 85, 85);
+    transition: border 0.3s;
+    font-size: 16px;
+}
+
+#comment-form input:hover,
+#comment-form input:focus {
+    outline: none;
+    border-bottom: 1px solid magenta;
+}
+
+#comment-form button {
+    margin-top: 10px;
+    background-color: white;
+    border: none;
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: rgb(88, 85, 85);
+    text-align: left;
+    padding-left: 10px;
+    transition: color 0.3s;
+}
+
+#comment-form button:hover,
+#comment-form button:focus {
+    color: magenta;
+    cursor: pointer;
+    outline: none;
+}
+
+.information-container .comments-container {
+    height: 250px;
+    overflow: scroll;
+}
+
+.information-container .comment {
+    margin-bottom: 13px;
+}
+
+.information-container .commenter {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+
+/* ////////// navigantion between individual images' modules /////// */
+
+.image-modal .arrow {
+    width: 30px;
+    height: 30px;
+}
+
+.image-modal .nav {
+    font-size: 50px;
+    text-decoration: none;
+    color: white;
+    font-weight: 50;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.image-modal .nav:hover,
+.image-modal .nav:focus {
+    color: rgba(225, 225, 225, 0.8);
+    outline: none;
+}
+
+.image-modal .nav:active {
+    color: rgba(225, 225, 225, 0.3);
 }
 
 /* ________________________________________________________________________________________________ */

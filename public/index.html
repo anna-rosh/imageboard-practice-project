@@ -51,36 +51,48 @@
 <!-- ////////////////////////////////// COMPONENT //////////////////////////// -->
     <script id='image-information' type="text/x-template">
         <div id="img-information-component">
-
-            <div class="arrow left-arr">
-                    <a :href="'#' + currentImageInfo.next" v-if="currentImageInfo.next" class="nav next"><</a>
-            </div>
-
-            <div class="information-container">
-                <div class="left-container">
-                    <img :src="currentImageInfo.url">
+            <div class="image-modal">
+                <div class="arrow left-arr">
+                        <a :href="'#' + currentImageInfo.next" v-if="currentImageInfo.next" class="nav next"><</a>
                 </div>
 
-                <div class="right-container">
-                    <h1 v-on:click="clicked" id="close">X</h1>
-                    <h2>{{ currentImageInfo.title }}</h2>
-                    <p>uploaded by {{ currentImageInfo.username }} on {{ currentImageInfo.created_at }}</p>
-                    <h2>add a comment</h2>
-                    <div id="comment-form">
-                        <input v-model="comment" type="text" name="comment" placeholder="comment">
-                        <input v-model="username" type="text" name="username" placeholder="username">
-                        <button @click="handleClickOnAddComment">add comment</button>
+                <div class="information-container">
+                    <div class="left-container">
+                        <img :src="currentImageInfo.url">
+                        <div id="delete-btn">
+                            <p>delete this image</p>
+                        </div>
                     </div>
-                    <div class="comment" v-for="comment in comments">
-                        <h3>{{ comment.comment }}</h3>
-                        <p>{{ comment.username }} on {{ comment.created_at }}</p>
+
+                    <div class="right-container">
+                        <h1 v-on:click="clicked" id="close">X</h1>
+                        <h2>{{ currentImageInfo.title }}</h2>
+                        <p>uploaded by {{ currentImageInfo.username }}<br>on {{ currentImageInfo.created_at }}</p>
+                        
+                        <div id="comment-form">
+                            <input v-model="comment" type="text" name="comment" placeholder="write a comment...">
+                            <input v-model="username" type="text" name="username" placeholder="username">
+                            <button @click="handleClickOnAddComment">add comment</button>
+                        </div>
+
+                        <div class="comments-container">
+                            <div class="comment" v-for="comment in comments">
+                                <p class="comment-text">{{ comment.comment }}</p>
+                                <p class="commenter">{{ comment.username }} on {{ comment.created_at }}</p>
+                            </div> 
+                        </div>
+                        <div id="delete-btn">
+                            <p>delete this image</p>
+                        </div>
                     </div>
                 </div>
+                
+                <div class="arrow right-arrow">
+                    <a :href="'#' + currentImageInfo.prev" v-if="currentImageInfo.prev" class="nav prev">></a>
+                </div>
             </div>
+
             
-            <div class="arrow right-arrow">
-                <a :href="'#' + currentImageInfo.prev" v-if="currentImageInfo.prev" class="nav prev">></a>
-            </div>
             
         </div>
     </script>
