@@ -95,6 +95,7 @@
         }, // closes methods
     }); // closes component
 
+    //////////////////////////////////////////////// MAIN VUE INSTANCE ///////////////////////////////////
 
     new Vue({
         el: "main",
@@ -105,6 +106,7 @@
             username: "",
             file: null,
             imageId: location.hash.slice(1),
+            noFile: false
         },
         mounted: function () {
             var that = this;
@@ -141,9 +143,16 @@
                 axios
                     .post("/upload", formData)
                     .then(function (resp) {
-                        // here I am getting response from the server (POST /upload)
-                        // => that is an obj with the inserted row from the database
-                        that.images.unshift(resp.data);
+                        if (resp.data.noFile) {
+                            // that.noFile = true;
+                            that.noFile = true;
+                        } else {
+                            // here I am getting response from the server (POST /upload)
+                            // => that is an obj with the inserted row from the database
+                            that.images.unshift(resp.data); 
+                            that.noFile = false;
+                        }
+                        
                     })
                     .then(function () {
                         that.clearInputFields();
@@ -156,6 +165,7 @@
             handleChange: function (e) {
                 // put the image into the data objeact
                 this.file = e.target.files[0];
+                this.noFile = false;
             },
 
             closeModal: function () {

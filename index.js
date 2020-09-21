@@ -52,7 +52,11 @@ app.get('/images', (req, res) => {
 
 app.post('/upload', uploader.single("file"), s3.upload, (req, res) => {
 
-    if (req.file) {
+    if (!req.file) {
+        console.log('req.file in post: ', req.file);
+        res.json({ noFile: true });
+
+    } else {
         // console.log(req.file);
         const filename = req.file.filename;
         const url = `${s3Url}${filename}`;

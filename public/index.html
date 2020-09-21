@@ -12,7 +12,12 @@
     </div>
 
     <main>
+        
+
         <div class="container">
+            <div class="no-file-error" v-if="noFile">please, choose an image to upload</div>
+            <div class="no-file-error" v-else></div>
+
             <form class="input-fields">
                 <div class="text-input">
                     <input v-model="title" type="text" name="title" placeholder="title">
