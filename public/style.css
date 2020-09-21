@@ -414,6 +414,44 @@ body {
 
 /* ________________________________________________________________________________________________ */
 
+@media screen and (max-width: 770px) {
+
+    #img-information-component .image-modal {
+        top: 120px;
+    }
+
+    .information-container {
+        flex-direction: column;
+        width: 350px;
+        height: 700px;
+    }
+
+    .information-container .left-container {
+        width: 100%;
+        height: 350px;
+    }
+
+    #delete-btn {
+        font-size: 14px;
+        text-align: right;
+    }
+
+    .information-container .left-container .bigger-img-container {
+    width: 350px;
+    height: 300px;
+    }
+
+    .information-container .right-container {
+        height: 350px;
+        width: 100%;
+        padding-left: 10px;
+    }
+
+    .information-container .comments-container {
+        height: 150px;
+    }
+
+}
 
 @media screen and (max-width: 680px) {
 
